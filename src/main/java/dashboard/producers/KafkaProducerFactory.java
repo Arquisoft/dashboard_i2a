@@ -1,4 +1,4 @@
-package hello.producers;
+package dashboard.producers;
 
 import java.util.HashMap;
 import java.util.Map;

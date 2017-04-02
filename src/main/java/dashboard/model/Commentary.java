@@ -1,5 +1,7 @@
 package dashboard.model;
 
+import org.springframework.data.annotation.Id;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package hello.listeners;
+package dashboard.listeners;
 
 import org.apache.log4j.Logger;
 import org.springframework.kafka.annotation.KafkaListener;

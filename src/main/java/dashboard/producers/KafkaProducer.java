@@ -1,4 +1,4 @@
-package hello.producers;
+package dashboard.producers;
 
 import javax.annotation.ManagedBean;
 
