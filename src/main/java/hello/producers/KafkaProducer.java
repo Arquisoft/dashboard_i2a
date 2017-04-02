@@ -16,7 +16,12 @@ public class KafkaProducer{
 	
 	@Autowired
 	private KafkaTemplate<String, String> kafkaTemplate;
-	
+
+	private KafkaProducer(){}
+
+	public KafkaProducer(String test){
+		kafkaTemplate = new  KafkaProducerFactory().kafkaTemplate();
+	}
 	
 	public void send(String topic, String data) {
 		ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(topic, data);

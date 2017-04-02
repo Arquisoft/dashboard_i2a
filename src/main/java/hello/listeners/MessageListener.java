@@ -13,11 +13,8 @@ public class MessageListener {
 
     private static final Logger logger = Logger.getLogger(MessageListener.class);
 
-    @KafkaListener(topics = "exampleTopic")
+    @KafkaListener(topics = "test")
     public void listen(String data) {
         logger.info("New message received: \"" + data + "\"");
     }
-
-
-
 }
