@@ -1,4 +1,4 @@
-package model;
+package dashboard.model;
 
 import javax.persistence.*;
 import java.sql.Date;

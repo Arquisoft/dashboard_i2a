@@ -164,3 +164,12 @@ INSERT INTO public."user"(
             nacionalidad)
     VALUES (1, '12345678A', 'Pepe', 'Calleja', 'calleja@email.com', 'password1234', 
       '1950-03-25', 'Oviedo', 2, 'Español');
+
+INSERT INTO public."category"(id,name)
+  VALUES (1, 'Cat1');
+
+INSERT INTO public."proposal"(id,content,votes,user_id,category_id)
+VALUES (1, 'Content', 3, 1, 1);
+
+INSERT INTO public."commentary"(id,content,votes,fecha,user_id,proposal_id)
+VALUES (1, 'Comentario', 2, '2017-4-1', 1, 1);
