@@ -3,15 +3,15 @@
 -- DROP SEQUENCE public.user_id_seq;
 
 CREATE SEQUENCE public.user_id_seq
-  INCREMENT 1
-  MINVALUE 1
-  MAXVALUE 9223372036854775807
-  START 1
-  CACHE 1;
+INCREMENT 1
+MINVALUE 1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
 ALTER TABLE public.user_id_seq
   OWNER TO postgres;
 
-  
+
 -- Table: public."user"
 
 -- DROP TABLE public."user";
@@ -32,7 +32,7 @@ CREATE TABLE public."user"
   CONSTRAINT user_id_key UNIQUE (id)
 )
 WITH (
-  OIDS=FALSE
+OIDS=FALSE
 );
 
 ALTER TABLE public."user"
@@ -43,11 +43,11 @@ ALTER TABLE public."user"
 -- DROP SEQUENCE public.category_id_seq;
 
 CREATE SEQUENCE public.category_id_seq
-  INCREMENT 1
-  MINVALUE 1
-  MAXVALUE 9223372036854775807
-  START 1
-  CACHE 1;
+INCREMENT 1
+MINVALUE 1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
 ALTER TABLE public.category_id_seq
   OWNER TO postgres;
 
@@ -62,31 +62,31 @@ CREATE TABLE public.category
   CONSTRAINT category_pkey PRIMARY KEY (id)
 )
 WITH (
-  OIDS=FALSE
+OIDS=FALSE
 );
 ALTER TABLE public.category
   OWNER TO postgres;
 
 
-  
 
-  
-  
-  
+
+
+
+
 -- Sequence: public.proposal_id_seq
 
 -- DROP SEQUENCE public.proposal_id_seq;
 
 CREATE SEQUENCE public.proposal_id_seq
-  INCREMENT 1
-  MINVALUE 1
-  MAXVALUE 9223372036854775807
-  START 1
-  CACHE 1;
+INCREMENT 1
+MINVALUE 1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
 ALTER TABLE public.proposal_id_seq
   OWNER TO postgres;
-  
-  
+
+
 -- Table: public.proposal
 
 -- DROP TABLE public.proposal;
@@ -100,14 +100,14 @@ CREATE TABLE public.proposal
   category_id integer,
   CONSTRAINT proposal_pkey PRIMARY KEY (id),
   CONSTRAINT "foreignKey_Category" FOREIGN KEY (category_id)
-      REFERENCES public.category (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  REFERENCES public.category (id) MATCH SIMPLE
+  ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT proposal_user_id_fkey FOREIGN KEY (user_id)
-      REFERENCES public."user" (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
+  REFERENCES public."user" (id) MATCH SIMPLE
+  ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (
-  OIDS=FALSE
+OIDS=FALSE
 );
 ALTER TABLE public.proposal
   OWNER TO postgres;
@@ -123,16 +123,16 @@ CREATE INDEX "fki_foreignKey_Category"
 
 
 
-  -- Sequence: public.commentary_id_seq
+-- Sequence: public.commentary_id_seq
 
 -- DROP SEQUENCE public.commentary_id_seq;
 
 CREATE SEQUENCE public.commentary_id_seq
-  INCREMENT 1
-  MINVALUE 1
-  MAXVALUE 9223372036854775807
-  START 1
-  CACHE 1;
+INCREMENT 1
+MINVALUE 1
+MAXVALUE 9223372036854775807
+START 1
+CACHE 1;
 ALTER TABLE public.commentary_id_seq
   OWNER TO postgres;
 
@@ -146,30 +146,43 @@ CREATE TABLE public.commentary
   proposal_id integer,
   CONSTRAINT commentary_pkey PRIMARY KEY (id),
   CONSTRAINT commentary_proposal_id_fkey FOREIGN KEY (proposal_id)
-      REFERENCES public.proposal (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  REFERENCES public.proposal (id) MATCH SIMPLE
+  ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT commentary_user_id_fkey FOREIGN KEY (user_id)
-      REFERENCES public."user" (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
+  REFERENCES public."user" (id) MATCH SIMPLE
+  ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (
-  OIDS=FALSE
+OIDS=FALSE
 );
 ALTER TABLE public.commentary
   OWNER TO postgres;
 
 
-INSERT INTO public."user"(
-            id, dni, nombre, apellidos, email, password, nacimiento, direccion, polling, 
-            nacionalidad)
-    VALUES (1, '12345678A', 'Pepe', 'Calleja', 'calleja@email.com', 'password1234', 
-      '1950-03-25', 'Oviedo', 2, 'Español');
+INSERT INTO public.user(
+  id, dni, nombre, apellidos, email, password, nacimiento, direccion, polling,
+  nacionalidad)
+VALUES (1, '12345678A', 'Pepe', 'Calleja', 'calleja@email.com', 'password1234',
+        '1950-03-25', 'Oviedo', 2, 'Español');
 
-INSERT INTO public."category"(id,name)
-  VALUES (1, 'Cat1');
+INSERT INTO public.user(
+  id, dni, nombre, apellidos, email, password, nacimiento, direccion, polling,
+  nacionalidad)
+VALUES (2, '12345678A', 'User', 'User', 'user@email.com', 'pass',
+        '1953-06-21', 'Oviedo', 1, 'Español');
 
-INSERT INTO public."proposal"(id,content,votes,user_id,category_id)
-VALUES (1, 'Content', 3, 1, 1);
+INSERT INTO public.category(
+  id, name)
+VALUES (1, 'General');
 
-INSERT INTO public."commentary"(id,content,votes,fecha,user_id,proposal_id)
-VALUES (1, 'Comentario', 2, '2017-4-1', 1, 1);
+INSERT INTO public.proposal(
+  id, content, votes, user_id, category_id)
+VALUES (1, 'Hacer un parque', 0, 1, 1);
+
+INSERT INTO public.proposal(
+  id, content, votes, user_id, category_id)
+VALUES (2, 'Hacer un monumento', 0, 1, 1);
+
+INSERT INTO public.commentary(
+  id, content, votes, fecha, user_id, proposal_id)
+VALUES (1, 'Buena idea el parque', 0, '2017-04-02', 1, 1);
