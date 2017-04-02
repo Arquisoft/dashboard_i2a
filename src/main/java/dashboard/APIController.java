@@ -1,4 +1,4 @@
-package hello;
+package dashboard;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,5 +11,7 @@ public class APIController {
     public UserInfo user() {
         return new UserInfo("pepe",0);
     }
+
+
 
 }

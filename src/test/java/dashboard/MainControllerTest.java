@@ -1,4 +1,4 @@
-package hello;
+package dashboard;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertThat;
