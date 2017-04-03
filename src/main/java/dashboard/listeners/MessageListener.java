@@ -16,5 +16,6 @@ public class MessageListener {
     @KafkaListener(topics = "test")
     public void listen(String data) {
         logger.info("New message received: \"" + data + "\"");
+        System.out.println("New message received: \"" + data + "\"");
     }
 }

@@ -1,7 +1,6 @@
 package dashboard.persistence.Impl;
 
 import dashboard.dto.Proposal;
-import dashboard.persistence.Conf.Conf;
 import dashboard.persistence.Database;
 import dashboard.persistence.ProposalDao;
 

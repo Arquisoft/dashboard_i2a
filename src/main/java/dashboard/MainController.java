@@ -1,6 +1,7 @@
 package dashboard;
 
 
+import dashboard.producers.KafkaProducer;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
