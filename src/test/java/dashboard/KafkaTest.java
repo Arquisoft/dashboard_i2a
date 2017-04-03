@@ -14,6 +14,7 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.IOException;
@@ -25,20 +26,22 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 /**
- * Created by Dax on 01-Apr-17.
+ * Created by Daniel Ortea on 01-Apr-17.
+ * Testing class dedicated to test Kafka Consumer and Producer API
  */
 @RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest
 public class KafkaTest {
 
     @Test
-    public void test() throws IOException, InterruptedException {
+    public void testConsumerAndProducer() throws IOException, InterruptedException {
         String topicName = "test";
         Producer<String,String> producer = new KafkaProducer<>(producerProps());
-        KafkaConsumer<String,String> consumer = new KafkaConsumer<String, String>(consumerProps());
-        consumer.subscribe(Arrays.asList(topicName));
+        KafkaConsumer<String,String> consumer = new KafkaConsumer<>(consumerProps());
+        consumer.subscribe(Collections.singletonList(topicName));
         System.out.println("Subscribed to topic " + topicName);
         for(int i=0; i<10;i++) {
-            producer.send(new ProducerRecord<String, String>(topicName,
+            producer.send(new ProducerRecord<>(topicName,
                     Integer.toString(i), "Fun: " + Integer.toString(i)));
         }
         System.out.println("Message sent successfully");
@@ -70,7 +73,7 @@ public class KafkaTest {
         return props;
     }
 
-    public Map<String, Object> consumerProps() {
+    private Map<String, Object> consumerProps() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "test");
@@ -81,4 +84,6 @@ public class KafkaTest {
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         return props;
     }
+
+
 }
