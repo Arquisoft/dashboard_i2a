@@ -51,6 +51,7 @@ public class ProposalDaoImpl implements ProposalDao{
             try {
                 rs.close();
                 pst.close();
+                con.close();
             } catch (SQLException e) {
                 System.err.println(e);
             }
