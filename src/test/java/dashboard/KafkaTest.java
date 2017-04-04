@@ -1,7 +1,8 @@
 package dashboard;
 
-
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dashboard.dto.Commentary;
 import dashboard.listeners.MessageListener;
 import dashboard.producers.KafkaProducer;
 import kafka.message.Message;
@@ -22,10 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertTrue;
@@ -53,5 +51,15 @@ public class KafkaTest {
         Message message = new Message(jsonString.getBytes());
         producer.send("test","foo");
         assertTrue(messageListener.getLatch().await(10, TimeUnit.SECONDS));
+    }
+
+    @Test
+    public void testSerialization() throws JsonProcessingException {
+        Commentary comment = new Commentary();
+        comment.setVotes(43);
+        comment.setFecha(new Date());
+
+        producer.send("test2",new ObjectMapper().writeValueAsString(comment));
+
     }
 }
