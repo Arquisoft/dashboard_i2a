@@ -1,89 +1,52 @@
 package dashboard;
 
 
+import dashboard.listeners.MessageListener;
+import dashboard.producers.KafkaProducer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.hamcrest.MatcherAssert;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Daniel Ortea on 01-Apr-17.
  * Testing class dedicated to test Kafka Consumer and Producer API
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest
 public class KafkaTest {
 
+    protected static final String TOPIC = "test";
+
+    @Autowired
+    private MessageListener messageListener;
+
+    @Autowired
+    private KafkaProducer producer;
+
     @Test
-    public void testConsumerAndProducer() throws IOException, InterruptedException {
-        String topicName = "test";
-        Producer<String,String> producer = new KafkaProducer<>(producerProps());
-        KafkaConsumer<String,String> consumer = new KafkaConsumer<>(consumerProps());
-        consumer.subscribe(Collections.singletonList(topicName));
-        System.out.println("Subscribed to topic " + topicName);
-        for(int i=0; i<10;i++) {
-            producer.send(new ProducerRecord<>(topicName,
-                    Integer.toString(i), "Fun: " + Integer.toString(i)));
-        }
-        System.out.println("Message sent successfully");
-        producer.close();
-        List<String> test = new ArrayList<>();
-        for(int i=0; i< 10;i++){
-            ConsumerRecords<String,String> records = consumer.poll(100);
-            for (ConsumerRecord<String, String> record : records) {
-                test.add("offset =" + record.offset() + ", key = "
-                        + record.key() + ", value = " + record.value());
-            }
-            Thread.sleep(10);
-        }
-        Files.write(Paths.get("output.txt"),test);
-        MatcherAssert.assertThat(10,
-                is(equalTo(Files.readAllLines(Paths.get("output.txt")).size())));
+    public void testSpringConsumerAndProducer() throws InterruptedException, IOException {
+        producer.send("test","foo");
+        assertTrue(messageListener.getLatch().await(10, TimeUnit.SECONDS));
     }
-
-    private Properties producerProps(){
-        Properties props = new Properties();
-        props.put(ProducerConfig.ACKS_CONFIG,"all");
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-        props.put(ProducerConfig.RETRIES_CONFIG, 0);
-        props.put(ProducerConfig.BATCH_SIZE_CONFIG, 16384);
-        props.put(ProducerConfig.LINGER_MS_CONFIG, 1);
-        props.put(ProducerConfig.BUFFER_MEMORY_CONFIG, 33554432);
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        return props;
-    }
-
-    private Map<String, Object> consumerProps() {
-        Map<String, Object> props = new HashMap<>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "test");
-        props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
-        props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "1000");
-        props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "30000");
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        return props;
-    }
-
-
 }

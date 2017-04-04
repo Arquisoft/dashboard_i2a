@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -15,9 +16,9 @@ import org.springframework.kafka.core.ProducerFactory;
 @Configuration
 @EnableKafka
 public class KafkaProducerFactory{
-	
+
 	@Bean
-	public ProducerFactory<String, String> producerFactory() {
+	public ProducerFactory<Integer, String> producerFactory() {
 		return new DefaultKafkaProducerFactory<>(producerConfigs());
 	}
 
@@ -35,8 +36,12 @@ public class KafkaProducerFactory{
 	}
 	
 	@Bean
-	public KafkaTemplate<String, String> kafkaTemplate() {
-		return new KafkaTemplate<String, String>(producerFactory());
+	public KafkaTemplate<Integer, String> kafkaTemplate() {
+		return new KafkaTemplate<Integer, String>(producerFactory());
 	}
 
+	@Bean
+	public KafkaProducer kafkaProducer() {
+		return new KafkaProducer();
+	}
 }

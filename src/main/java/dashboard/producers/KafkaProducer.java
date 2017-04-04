@@ -1,7 +1,5 @@
 package dashboard.producers;
 
-import javax.annotation.ManagedBean;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -9,13 +7,12 @@ import org.springframework.kafka.support.SendResult;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
-@ManagedBean
 public class KafkaProducer{
 	private static final Logger logger = Logger.getLogger(KafkaProducer.class);
 	
 	
 	@Autowired
-	private KafkaTemplate<String, String> kafkaTemplate;
+	private KafkaTemplate<Integer, String> kafkaTemplate;
 
 	public KafkaProducer(){}
 
@@ -24,10 +21,10 @@ public class KafkaProducer{
 	}
 	
 	public void send(String topic, String data) {
-		ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(topic, data);
-		future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
+		ListenableFuture<SendResult<Integer, String>> future = kafkaTemplate.send(topic, data);
+		future.addCallback(new ListenableFutureCallback<SendResult<Integer, String>>() {
 			@Override
-			public void onSuccess(SendResult<String, String> result) {
+			public void onSuccess(SendResult<Integer, String> result) {
 				logger.info("Success on sending message \"" + data + "\" to topic " + topic);
 			}
 			
