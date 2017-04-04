@@ -12,6 +12,8 @@ public class Commentary {
     private Integer proposalId;
     private Integer userId;
 
+    private User user;
+
     public Commentary() {
     }
 
@@ -66,7 +68,6 @@ public class Commentary {
     public Date getFecha() {
         return fecha;
     }
-
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
