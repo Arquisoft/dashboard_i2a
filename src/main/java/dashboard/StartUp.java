@@ -12,23 +12,26 @@ import java.io.IOException;
  */
 @Component
 public class StartUp implements ApplicationListener<ContextRefreshedEvent>{
+    private boolean initialized = false;
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        try {
-            if(SystemUtils.IS_OS_WINDOWS) {
-                Runtime.getRuntime().exec("cmd.exe /c start kafkaWindows.bat");
-                Thread.sleep(14000);
+        if (!initialized) {
+            try {
+                initialized=true;
+                if (SystemUtils.IS_OS_WINDOWS) {
+                    Runtime.getRuntime().exec("cmd.exe /c start kafkaWindows.bat");
+                    Thread.sleep(14000);
+                } else if (SystemUtils.IS_OS_LINUX) {
+                    new ProcessBuilder("chmod +x", "kafkaLinux.sh").start();
+                    new ProcessBuilder("/kafkaLinux.sh").start();
+                } else
+                    System.err.println("OS is not compatible");
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            else if(SystemUtils.IS_OS_LINUX){
-                new ProcessBuilder("chmod +x", "kafkaLinux.sh").start();
-                new ProcessBuilder("/kafkaLinux.sh").start();
-            }
-            else
-                System.err.println("OS is not compatible");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 }
