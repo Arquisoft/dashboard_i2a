@@ -12,6 +12,7 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Alex on 02/04/2017.
+ * Checks the validity of the database using DAOs.
  */
 public class PersistenceTest {
 

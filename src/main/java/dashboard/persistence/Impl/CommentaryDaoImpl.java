@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * Created by Alex on 02/04/2017.
+ * Data Access Object for Commentary table.
  */
 public class CommentaryDaoImpl implements CommentaryDao{
 
@@ -45,7 +46,7 @@ public class CommentaryDaoImpl implements CommentaryDao{
             return comments;
 
         } catch (SQLException e) {
-            System.err.println(e);
+            e.printStackTrace();
             return null;
         } finally {
             try {
@@ -53,7 +54,7 @@ public class CommentaryDaoImpl implements CommentaryDao{
                 pst.close();
                 con.close();
             } catch (SQLException e) {
-                System.err.println(e);
+                e.printStackTrace();
             }
         }
     }

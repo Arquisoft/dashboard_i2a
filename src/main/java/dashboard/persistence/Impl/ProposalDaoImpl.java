@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * Created by Alex on 02/04/2017.
+ * Data Access Object for Proposal table.
  */
 public class ProposalDaoImpl implements ProposalDao{
 
@@ -21,7 +22,7 @@ public class ProposalDaoImpl implements ProposalDao{
 
     @Override
     public List<Proposal> getProposals() {
-        List<Proposal> proposals = new ArrayList<Proposal>();
+        List<Proposal> proposals = new ArrayList<>();
         PreparedStatement pst = null;
         ResultSet rs = null;
         try {
@@ -45,7 +46,7 @@ public class ProposalDaoImpl implements ProposalDao{
             return proposals;
 
         } catch (SQLException e) {
-            System.err.println(e);
+            e.printStackTrace();
             return null;
         } finally {
             try {

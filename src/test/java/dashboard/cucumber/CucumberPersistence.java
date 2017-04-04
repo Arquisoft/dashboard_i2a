@@ -3,6 +3,7 @@ package dashboard.cucumber;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+
 import dashboard.dto.Proposal;
 import dashboard.persistence.Persistence;
 import dashboard.persistence.ProposalDao;

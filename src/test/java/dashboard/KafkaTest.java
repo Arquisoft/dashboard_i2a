@@ -1,8 +1,10 @@
 package dashboard;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dashboard.listeners.MessageListener;
 import dashboard.producers.KafkaProducer;
+import kafka.message.Message;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -46,6 +48,9 @@ public class KafkaTest {
 
     @Test
     public void testSpringConsumerAndProducer() throws InterruptedException, IOException {
+        UserInfo user = new UserInfo("Pepe",10);
+        String jsonString = new ObjectMapper().writeValueAsString(user);
+        Message message = new Message(jsonString.getBytes());
         producer.send("test","foo");
         assertTrue(messageListener.getLatch().await(10, TimeUnit.SECONDS));
     }
