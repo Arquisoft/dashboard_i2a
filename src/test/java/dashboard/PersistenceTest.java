@@ -1,13 +1,16 @@
 package dashboard;
 
+import dashboard.dto.Category;
 import dashboard.dto.Commentary;
 import dashboard.dto.Proposal;
+import dashboard.dto.User;
 import dashboard.persistence.*;
 import org.junit.After;
 import org.junit.Test;
 
 import java.util.List;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -59,5 +62,19 @@ public class PersistenceTest {
         CommentaryDao cDao = Persistence.getCommentaryDao();
         List<Commentary> c = cDao.getCommentariesFromProposalId(1);
         assertTrue(!c.isEmpty());
+    }
+
+    @Test
+    public void testCategory(){
+        CategoryDao cDao = Persistence.getCategoryDao();
+        Category category = cDao.getCategoryById(1);
+        assertNotNull(category);
+    }
+
+    @Test
+    public void testUser(){
+        UserDao userDao = Persistence.getUserDao();
+        User user= userDao.getUserById(1);
+        assertNotNull(user);
     }
 }

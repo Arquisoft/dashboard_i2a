@@ -1,5 +1,7 @@
 package dashboard.dto;
 
+import java.util.List;
+
 public class Proposal {
     private Integer id;
     private String content;
@@ -8,6 +10,28 @@ public class Proposal {
     private Integer userId;
 
     private Category category;
+    private User user;
+    private List<Commentary> commentaries;
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Commentary> getCommentaries() {
+        return commentaries;
+    }
+
+    public void setCommentaries(List<Commentary> commentaries) {
+        this.commentaries = commentaries;
+    }
 
     public Category getCategory() {
         return category;
