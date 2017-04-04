@@ -59,7 +59,7 @@ public class KafkaTest {
         comment.setVotes(43);
         comment.setFecha(new Date());
 
-        producer.send("test2",new ObjectMapper().writeValueAsString(comment));
+        producer.send("comments",new ObjectMapper().writeValueAsString(comment));
 
     }
 }

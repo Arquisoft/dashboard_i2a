@@ -1,12 +1,15 @@
 package dashboard.listeners;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dashboard.dto.Commentary;
 import dashboard.dto.Proposal;
 import org.apache.log4j.Logger;
 import org.springframework.kafka.annotation.KafkaListener;
 
 import javax.annotation.ManagedBean;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -27,13 +30,14 @@ public class MessageListener {
     @KafkaListener(topics = "proposals")
     public void processJSONProposal(String jsonString) throws IOException {
         Proposal proposal = new ObjectMapper().readValue(jsonString, Proposal.class);
-        System.out.printf("Proposal Votes: %s Date: %tB %<td\n"
-                , proposal.getVotes(), proposal);
     }
 
     @KafkaListener(topics = "comments")
-    public void processJSONComments(String jsonString) {
-
+    public void processJSONComments(String jsonString) throws IOException {
+        Commentary comment = new ObjectMapper().readValue(jsonString,Commentary.class);
+        String data = "Proposal:\tVotes: " + comment.getVotes()
+                + " Date: "  + comment.getFecha();
+        Files.write(Paths.get("output.txt"),"".getBytes());
     }
 
 

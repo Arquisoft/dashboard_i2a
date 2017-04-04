@@ -1,3 +1,4 @@
+robocopy kafka_2.11-0.10.2.0 %TEMP%\kafka /s
 C:
 cd %TEMP%\kafka
 
