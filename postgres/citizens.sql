@@ -16,7 +16,7 @@ ALTER TABLE public.user_id_seq
 
 -- DROP TABLE public."user";
 
-CREATE TABLE public."user"
+CREATE TABLE public."users"
 (
   id integer NOT NULL DEFAULT nextval('user_id_seq'::regclass),
   dni text NOT NULL,
@@ -35,7 +35,7 @@ WITH (
 OIDS=FALSE
 );
 
-ALTER TABLE public."user"
+ALTER TABLE public.users
   OWNER TO postgres;
 
 -- Sequence: public.category_id_seq
@@ -103,7 +103,7 @@ CREATE TABLE public.proposal
   REFERENCES public.category (id) MATCH SIMPLE
   ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT proposal_user_id_fkey FOREIGN KEY (user_id)
-  REFERENCES public."user" (id) MATCH SIMPLE
+  REFERENCES public.users (id) MATCH SIMPLE
   ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (
@@ -149,7 +149,7 @@ CREATE TABLE public.commentary
   REFERENCES public.proposal (id) MATCH SIMPLE
   ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT commentary_user_id_fkey FOREIGN KEY (user_id)
-  REFERENCES public."user" (id) MATCH SIMPLE
+  REFERENCES public.users (id) MATCH SIMPLE
   ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (
@@ -159,13 +159,13 @@ ALTER TABLE public.commentary
   OWNER TO postgres;
 
 
-INSERT INTO public.user(
+INSERT INTO public.users(
   id, dni, nombre, apellidos, email, password, nacimiento, direccion, polling,
   nacionalidad)
 VALUES (1, '12345678A', 'Pepe', 'Calleja', 'calleja@email.com', 'password1234',
         '1950-03-25', 'Oviedo', 2, 'Español');
 
-INSERT INTO public.user(
+INSERT INTO public.users(
   id, dni, nombre, apellidos, email, password, nacimiento, direccion, polling,
   nacionalidad)
 VALUES (2, '12345678A', 'User', 'User', 'user@email.com', 'pass',
