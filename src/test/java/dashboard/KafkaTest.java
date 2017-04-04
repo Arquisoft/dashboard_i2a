@@ -1,6 +1,7 @@
 package dashboard;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dashboard.dto.Commentary;
 import dashboard.listeners.MessageListener;
@@ -54,10 +55,12 @@ public class KafkaTest {
     }
 
     @Test
-    public void testSerialization() {
+    public void testSerialization() throws JsonProcessingException {
         Commentary comment = new Commentary();
         comment.setVotes(43);
         comment.setFecha(new Date());
+
+        producer.send("test2",new ObjectMapper().writeValueAsString(comment));
 
     }
 }

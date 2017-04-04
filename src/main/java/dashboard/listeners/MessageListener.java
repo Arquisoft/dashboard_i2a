@@ -1,9 +1,12 @@
 package dashboard.listeners;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import dashboard.dto.Proposal;
 import org.apache.log4j.Logger;
 import org.springframework.kafka.annotation.KafkaListener;
 
 import javax.annotation.ManagedBean;
+import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -20,6 +23,19 @@ public class MessageListener {
         System.out.println("New message received: \"" + content + "\"");
         latch.countDown();
     }
+
+    @KafkaListener(topics = "proposals")
+    public void processJSONProposal(String jsonString) throws IOException {
+        Proposal proposal = new ObjectMapper().readValue(jsonString, Proposal.class);
+        System.out.printf("Proposal Votes: %s Date: %tB %<td\n"
+                , proposal.getVotes(), proposal);
+    }
+
+    @KafkaListener(topics = "comments")
+    public void processJSONComments(String jsonString) {
+
+    }
+
 
     public CountDownLatch getLatch() {
         return latch;
