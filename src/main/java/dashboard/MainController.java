@@ -49,32 +49,33 @@ public class MainController {
     private void produce() throws JsonProcessingException, InterruptedException {
         Thread thread = new Thread()
         {
-            public void run(){
+            public void run() {
 
-            ArrayList<Commentary> comments = createComments();
-            ArrayList<Proposal> proposals = createProposals();
+                ArrayList<Commentary> comments = createComments();
+                ArrayList<Proposal> proposals = createProposals();
 
-            for (int i = 0; i < 20; i++) {
-                try {
-                    producer.send("comments",
-                            new ObjectMapper().writeValueAsString(comments.get(i)));
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    producer.send("proposals",
-                            new ObjectMapper().writeValueAsString(proposals.get(i)));
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                for (int i = 0; i < 20; i++) {
+                    try {
+                        producer.send("comments",
+                                new ObjectMapper().writeValueAsString(comments.get(i)));
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        producer.send("proposals",
+                                new ObjectMapper().writeValueAsString(proposals.get(i)));
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-        }
         };
+        thread.start();
 
 
     }

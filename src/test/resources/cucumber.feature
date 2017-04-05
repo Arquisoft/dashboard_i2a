@@ -4,5 +4,3 @@ Feature: application running, recieves the initial data and connects with kafka
     When the database gets a connection
     Then the application gets the proposal
     And the list is not empty
-
-  Scenario: Create a comment
