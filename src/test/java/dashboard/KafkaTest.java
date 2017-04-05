@@ -37,16 +37,7 @@ public class KafkaTest {
 
     @Test
     public void testSerialization() throws JsonProcessingException, InterruptedException {
-        ArrayList<Commentary> comments = createComments();
-        ArrayList<Proposal> proposals = createProposals();
 
-        for (int i = 0; i < 20;i++) {
-            producer.send("comments",
-                    new ObjectMapper().writeValueAsString(comments.get(i)));
-            producer.send("proposals",
-                    new ObjectMapper().writeValueAsString(proposals.get(i)));
-            Thread.sleep(5000);
-        }
     }
 
     @Test
@@ -61,26 +52,6 @@ public class KafkaTest {
         else
             logger.info("Message not received");
         messageListener.setTest(false);
-    }
-
-    private ArrayList<Proposal> createProposals() {
-        ArrayList<Proposal> proposals = new ArrayList<>();
-        for (int i = 0; i < 20;i++) {
-            Proposal proposal = new Proposal("This is kafkaProposal number " + i
-                    , i+1, 2,2);
-            proposals.add(proposal);
-        }
-        return proposals;
-    }
-
-    private ArrayList<Commentary> createComments() {
-        ArrayList<Commentary> comments = new ArrayList<>();
-        for (int i = 0; i < 20;i++) {
-            Commentary comment = new Commentary("This is kafkaComment number " + i
-                    , i+1, new Date(),2,2);
-            comments.add(comment);
-        }
-        return comments;
     }
 
 }
