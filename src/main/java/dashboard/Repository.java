@@ -52,7 +52,7 @@ public class Repository {
 
     public void add(Proposal proposal) {
         categories.forEach(category -> {
-            if (category.getName().equals(proposal.getCategory().getName()))
+            if (category.getId().equals(proposal.getCategoryId()))
                 category.getProposals().add(proposal);
         });
     }
