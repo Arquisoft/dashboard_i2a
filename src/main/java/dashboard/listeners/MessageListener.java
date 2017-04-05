@@ -18,13 +18,13 @@ import java.util.concurrent.CountDownLatch;
 public class MessageListener {
 
     private static final Logger logger = Logger.getLogger(MessageListener.class);
-    private final CountDownLatch latch = new CountDownLatch(1);
+    private boolean test = false;
 
     @KafkaListener(topics = "test")
-    public void processMessage(String content) {
+    public void processMessage(String content) throws InterruptedException {
         logger.info("New message received: \"" + content + "\"");
         System.out.println("New message received: \"" + content + "\"");
-        latch.countDown();
+        test = true;
     }
 
     @KafkaListener(topics = "proposals")
@@ -41,7 +41,7 @@ public class MessageListener {
     }
 
 
-    public CountDownLatch getLatch() {
-        return latch;
+    public boolean getTest() {
+        return test;
     }
 }
