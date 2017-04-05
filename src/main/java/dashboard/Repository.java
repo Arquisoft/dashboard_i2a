@@ -1,6 +1,7 @@
 package dashboard;
 
 import dashboard.dto.Category;
+import dashboard.dto.Commentary;
 import dashboard.dto.Proposal;
 import dashboard.dto.User;
 import dashboard.persistence.Persistence;
@@ -47,5 +48,21 @@ public class Repository {
 
     public ArrayList<Category> getCategories() {
         return categories;
+    }
+
+    public void add(Proposal proposal) {
+        categories.forEach(category -> {
+            if (category.getName().equals(proposal.getCategory().getName()))
+                category.getProposals().add(proposal);
+        });
+    }
+
+    public void add(Commentary comment) {
+        categories.forEach(category -> {
+            getProposals().forEach(proposal -> {
+                if (proposal.getId().equals(comment.getProposalId()))
+                    proposal.getCommentaries().add(comment);
+            });
+        });
     }
 }

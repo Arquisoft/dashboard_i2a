@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,6 +28,31 @@ public class MainController {
         model.addAttribute("repository",repository);
         return "index";
     }
+
+    @RequestMapping (path = "/register", method = RequestMethod.GET)
+    public SseEmitter register() throws IOException {
+        logger.info("Registering a stream.");
+
+        SseEmitter emitter = new SseEmitter();
+
+        synchronized (sseEmitters) {
+            sseEmitters.add(emitter);
+        }
+        emitter.onCompletion(() -> sseEmitters.remove(emitter));
+
+        return emitter;
+    }
+
+//    synchronized (sseEmitters) {
+//        sseEmitters.forEach((SseEmitter emitter) -> {
+//            try {
+//                emitter.send(, MediaType.APPLICATION_JSON);
+//            } catch (IOException e) {
+//                emitter.complete();
+//                sseEmitters.remove(emitter);
+//            }
+//        });
+//    }
 
 
 

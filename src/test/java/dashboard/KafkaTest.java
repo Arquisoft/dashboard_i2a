@@ -3,6 +3,7 @@ package dashboard;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dashboard.dto.Commentary;
+import dashboard.dto.Proposal;
 import dashboard.listeners.MessageListener;
 import dashboard.producers.KafkaProducer;
 import kafka.message.Message;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Logger;
 
@@ -34,13 +36,17 @@ public class KafkaTest {
     private KafkaProducer producer;
 
     @Test
-    public void testSerialization() throws JsonProcessingException {
-        Commentary comment = new Commentary();
-        comment.setVotes(43);
-        comment.setFecha(new Date());
+    public void testSerialization() throws JsonProcessingException, InterruptedException {
+        ArrayList<Commentary> comments = createComments();
+        ArrayList<Proposal> proposals = createProposals();
 
-        producer.send("comments",new ObjectMapper().writeValueAsString(comment));
-
+        for (int i = 0; i < 20;i++) {
+            producer.send("comments",
+                    new ObjectMapper().writeValueAsString(comments.get(i)));
+            producer.send("proposals",
+                    new ObjectMapper().writeValueAsString(proposals.get(i)));
+            Thread.sleep(5000);
+        }
     }
 
     @Test
@@ -55,6 +61,26 @@ public class KafkaTest {
         else
             logger.info("Message not received");
         messageListener.setTest(false);
+    }
+
+    private ArrayList<Proposal> createProposals() {
+        ArrayList<Proposal> proposals = new ArrayList<>();
+        for (int i = 0; i < 20;i++) {
+            Proposal proposal = new Proposal("This is kafkaProposal number " + i
+                    , i+1, 2,2);
+            proposals.add(proposal);
+        }
+        return proposals;
+    }
+
+    private ArrayList<Commentary> createComments() {
+        ArrayList<Commentary> comments = new ArrayList<>();
+        for (int i = 0; i < 20;i++) {
+            Commentary comment = new Commentary("This is kafkaComment number " + i
+                    , i+1, new Date(),2,2);
+            comments.add(comment);
+        }
+        return comments;
     }
 
 }

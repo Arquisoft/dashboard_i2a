@@ -80,10 +80,6 @@ public class Proposal {
         return categoryId;
     }
 
-    public void setCategory(Integer categoryId) {
-        this.categoryId = categoryId;
-    }
-
     public Integer getUserId() {
         return userId;
     }
