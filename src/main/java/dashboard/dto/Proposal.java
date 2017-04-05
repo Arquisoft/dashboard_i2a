@@ -13,6 +13,17 @@ public class Proposal {
     private User user;
     private List<Commentary> commentaries;
 
+    public Proposal() {
+    }
+
+    public Proposal(String content, Integer votes, Integer categoryId, Integer usedId) {
+        super();
+        this.content = content;
+        this.votes = votes;
+        this.categoryId = categoryId;
+        this.userId = usedId;
+    }
+
     public void setCategoryId(Integer categoryId) {
         this.categoryId = categoryId;
     }
@@ -39,17 +50,6 @@ public class Proposal {
 
     public void setCategory(Category category) {
         this.category = category;
-    }
-
-    public Proposal() {
-    }
-
-    public Proposal(String content, Integer votes, Integer categoryId, Integer usedId) {
-        super();
-        this.content = content;
-        this.votes = votes;
-        this.categoryId = categoryId;
-        this.userId = usedId;
     }
 
     public Integer getId() {
@@ -97,18 +97,6 @@ public class Proposal {
         return "Content: " + content + "; Votes: " + votes + "; "
                 + "Category: " + categoryId + "; User: " + userId;
 
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((categoryId == null) ? 0 : categoryId.hashCode());
-        result = prime * result + ((content == null) ? 0 : content.hashCode());
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        result = prime * result + ((userId == null) ? 0 : userId.hashCode());
-        result = prime * result + votes;
-        return result;
     }
 
     @Override

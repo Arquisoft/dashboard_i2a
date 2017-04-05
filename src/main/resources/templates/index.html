@@ -17,17 +17,32 @@
 </div>
 <div class="container-fluid">
 
+    <h1>Categories: </h1>
+    <ul class="list-group" th:each="category : ${@repository.getCategories()}">
+        <h2 class="list-group-item-heading" th:text="${category.name}"></h2>
 
-    <ul class="list-group" th:each="prop : ${proposals}">
-        <li class="list-group-item" th:text="${prop.content}" ></li>
-        <li class="list-group-item" th:text="${prop.votes}" ></li>
-        <li class="list-group-item" th:text="${prop.userid}" ></li>
+        <ul class="list-group-item" th:each="prop : ${category.getProposals()}">
+            <h4 class="list-group-item-heading"
+                th:text="${'# ' + prop.getContent() + ' ['
+                 + prop.getUser().getFirstName() + prop.getUser().getLastName() + ']'}">
+                <span class="badge" th:text="${prop.getVotes()}"></span></h4>
+
+            <ul class="list-group-item" th:each="comment : ${prop.getCommentaries()}">
+                <h5 class="list-group-item-heading" th:text="${
+                 comment.getUser().getFirstName() + ' ' + comment.getUser().getLastName()
+                + ' @' + comment.getFecha()}">
+                    <span class="badge" th:text="${comment.getVotes()}"></span>
+                </h5>
+
+                    <li class="list-group-item" th:text="${comment.getContent()}" ></li>
+            </ul>
+        </ul>
     </ul>
 
 
     <ul class="list-group">
         <h4 class="list-group-item-heading">Seguridad ciudadana</h4>
-        <li class="list-group-item">Propuesta 1<span class="badge">5</span> </li>
+        <li class="list-group-item">Propuesta 1<span cass="badge">5</span>l </li>
         <li class="list-group-item">Propuesta 2<span class="badge">10</span> </li>
         <li class="list-group-item">Propuesta 3<span class="badge">7</span> </li>
     </ul>

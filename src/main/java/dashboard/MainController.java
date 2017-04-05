@@ -1,9 +1,8 @@
 package dashboard;
 
 
-import dashboard.dto.Proposal;
-import dashboard.persistence.Persistence;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,10 +18,12 @@ public class MainController {
     private static final Logger logger = Logger.getLogger(MainController.class);
     private List<SseEmitter> sseEmitters = Collections.synchronizedList(new ArrayList<>());
 
+    @Autowired
+    private Repository repository;
+
     @RequestMapping("/")
-    public String landing(ArrayList<Proposal> proposals, Model model) {
-        proposals = (ArrayList<Proposal>) Persistence.getProposalDao().getProposals();
-        model.addAttribute("proposals",proposals);
+    public String landing(Model model) {
+        model.addAttribute("repository",repository);
         return "index";
     }
 

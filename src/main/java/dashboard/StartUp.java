@@ -21,10 +21,10 @@ public class StartUp implements ApplicationListener<ContextRefreshedEvent>{
                 initialized=true;
                 if (SystemUtils.IS_OS_WINDOWS) {
                     Runtime.getRuntime().exec("cmd.exe /c start kafkaWindows.bat");
-                    Thread.sleep(14000);
-                } else if (SystemUtils.IS_OS_LINUX) {
-                    Runtime.getRuntime().exec("chmod +x kafkaLinux.sh");
-                    new ProcessBuilder("./kafkaLinux.sh").start();
+                    Thread.sleep(35000);
+//                } else if (SystemUtils.IS_OS_LINUX) {
+//                    Runtime.getRuntime().exec("chmod +x kafkaLinux.sh");
+//                    new ProcessBuilder("./kafkaLinux.sh").start();
                 } else
                     System.err.println("OS is not compatible");
             } catch (IOException e) {

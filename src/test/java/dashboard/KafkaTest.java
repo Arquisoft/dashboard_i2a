@@ -6,27 +6,15 @@ import dashboard.dto.Commentary;
 import dashboard.listeners.MessageListener;
 import dashboard.producers.KafkaProducer;
 import kafka.message.Message;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.serialization.StringDeserializer;
-import org.apache.kafka.common.serialization.StringSerializer;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
-
-import static org.junit.Assert.assertTrue;
+import java.util.Date;
+import java.util.logging.Logger;
 
 /**
  * Created by Daniel Ortea on 01-Apr-17.
@@ -36,6 +24,7 @@ import static org.junit.Assert.assertTrue;
 @SpringBootTest
 public class KafkaTest {
 
+    private static final Logger logger = Logger.getLogger(String.valueOf(KafkaTest.class));
     protected static final String TOPIC = "test";
 
     @Autowired
@@ -43,15 +32,6 @@ public class KafkaTest {
 
     @Autowired
     private KafkaProducer producer;
-
-    @Test
-    public void testSpringConsumerAndProducer() throws InterruptedException, IOException {
-        UserInfo user = new UserInfo("Pepe",10);
-        String jsonString = new ObjectMapper().writeValueAsString(user);
-        Message message = new Message(jsonString.getBytes());
-        producer.send("test","foo");
-        assertTrue(messageListener.getLatch().await(10, TimeUnit.SECONDS));
-    }
 
     @Test
     public void testSerialization() throws JsonProcessingException {
@@ -62,4 +42,19 @@ public class KafkaTest {
         producer.send("comments",new ObjectMapper().writeValueAsString(comment));
 
     }
+
+    @Test
+    public void testSpringConsumerAndProducer() throws InterruptedException, IOException {
+        UserInfo user = new UserInfo("Pepe",10);
+        String jsonString = new ObjectMapper().writeValueAsString(user);
+        Message message = new Message(jsonString.getBytes());
+        producer.send("test","foo");
+        Thread.sleep(5000);
+        if(messageListener.getTest())
+            logger.info("Message received");
+        else
+            logger.info("Message not received");
+        messageListener.setTest(false);
+    }
+
 }
