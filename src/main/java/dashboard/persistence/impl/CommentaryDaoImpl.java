@@ -1,4 +1,4 @@
-package dashboard.persistence.Impl;
+package dashboard.persistence.impl;
 
 import dashboard.dto.Commentary;
 import dashboard.persistence.CommentaryDao;

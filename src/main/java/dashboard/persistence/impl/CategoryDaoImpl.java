@@ -1,4 +1,4 @@
-package dashboard.persistence.Impl;
+package dashboard.persistence.impl;
 
 import dashboard.dto.Category;
 import dashboard.persistence.CategoryDao;
@@ -26,14 +26,16 @@ public class CategoryDaoImpl implements CategoryDao {
             pst.setInt(1, id);
 
             rs = pst.executeQuery();
-            rs.next();
+            if (rs.next()) {
 
                 Integer idCategory = rs.getInt("id");
                 String name = rs.getString("name");
 
-            Category cat = new Category(idCategory, name);
+                Category cat = new Category(idCategory, name);
 
-            return cat;
+                return cat;
+            }
+            return null;
 
         } catch (SQLException e) {
             e.printStackTrace();

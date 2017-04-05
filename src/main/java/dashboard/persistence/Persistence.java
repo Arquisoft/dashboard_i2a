@@ -1,9 +1,9 @@
 package dashboard.persistence;
 
-import dashboard.persistence.Impl.CategoryDaoImpl;
-import dashboard.persistence.Impl.CommentaryDaoImpl;
-import dashboard.persistence.Impl.ProposalDaoImpl;
-import dashboard.persistence.Impl.UserDaoImpl;
+import dashboard.persistence.impl.CategoryDaoImpl;
+import dashboard.persistence.impl.CommentaryDaoImpl;
+import dashboard.persistence.impl.ProposalDaoImpl;
+import dashboard.persistence.impl.UserDaoImpl;
 
 /**
  * Created by Alex on 02/04/2017.

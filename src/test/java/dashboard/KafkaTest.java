@@ -6,25 +6,14 @@ import dashboard.dto.Commentary;
 import dashboard.listeners.MessageListener;
 import dashboard.producers.KafkaProducer;
 import kafka.message.Message;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.serialization.StringDeserializer;
-import org.apache.kafka.common.serialization.StringSerializer;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
+import java.util.Date;
 
 import static org.junit.Assert.assertTrue;
 
@@ -60,8 +49,9 @@ public class KafkaTest {
         String jsonString = new ObjectMapper().writeValueAsString(user);
         Message message = new Message(jsonString.getBytes());
         producer.send("test","foo");
-        Thread.sleep(4000);
-        //assertTrue(messageListener.getTest());
+        Thread.sleep(5000);
+        assertTrue(messageListener.getTest());
+        messageListener.setTest(false);
     }
 
 }

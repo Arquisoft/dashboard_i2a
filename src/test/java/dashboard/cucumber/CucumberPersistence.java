@@ -3,7 +3,6 @@ package dashboard.cucumber;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-
 import dashboard.dto.Proposal;
 import dashboard.persistence.Persistence;
 import dashboard.persistence.ProposalDao;
@@ -16,18 +15,18 @@ public class CucumberPersistence {
     private List<Proposal> p;
 
     @When("^the database gets a connection$")
-    public void the_database_gets_a_connection() throws Throwable{
+    public void theDatabaseGetsAConnection() throws Throwable{
         pDao= Persistence.getProposalDao();
     }
 
     @Then("^the application gets the proposal$")
-    public void the_application_gets_the_proposal(){
+    public void theApplicationGetsTheProposal(){
         p=pDao.getProposals();
         Assert.assertNotNull(p);
     }
 
     @And("^the list is not empty?")
-    public void the_list_is_not_empty(){
+    public void theListIsNotEmpty(){
         Assert.assertTrue(!p.isEmpty());
     }
 }

@@ -8,8 +8,8 @@ TIMEOUT 7
 start binaries\windows\zookeeper-server-start.bat config\zookeeper.properties
 
 echo Waiting for zookeeper to start
-TIMEOUT 15
+TIMEOUT 10
 
-binaries\windows\kafka-server-start.bat config\server.properties
+start binaries\windows\kafka-server-start.bat config\server.properties
 
-TIMEOUT 5
+exit

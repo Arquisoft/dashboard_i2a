@@ -10,8 +10,8 @@ import org.junit.Test;
 
 import java.util.List;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Alex on 02/04/2017.
@@ -23,7 +23,7 @@ public class PersistenceTest {
     public void testProposal() {
         ProposalDao pDao = Persistence.getProposalDao();
         List<Proposal> p = pDao.getProposals();
-        assertTrue(!p.isEmpty());
+        assertFalse(p.isEmpty());
     }
 
     @After
@@ -33,35 +33,35 @@ public class PersistenceTest {
     public void testCommentary(){
         CommentaryDao cDao = Persistence.getCommentaryDao();
         List<Commentary> c = cDao.getCommentariesFromProposalId(1);
-        assertTrue(!c.isEmpty());
+        assertFalse(c.isEmpty());
     }
 
     @Test
     public void testProposal2() {
         ProposalDao pDao = Persistence.getProposalDao();
         List<Proposal> p = pDao.getProposals();
-        assertTrue(!p.isEmpty());
+        assertFalse(p.isEmpty());
     }
 
     @Test
     public void testCommentary2(){
         CommentaryDao cDao = Persistence.getCommentaryDao();
         List<Commentary> c = cDao.getCommentariesFromProposalId(1);
-        assertTrue(!c.isEmpty());
+        assertFalse(c.isEmpty());
     }
 
     @Test
     public void testProposal3() {
         ProposalDao pDao = Persistence.getProposalDao();
         List<Proposal> p = pDao.getProposals();
-        assertTrue(!p.isEmpty());
+        assertFalse(p.isEmpty());
     }
 
     @Test
     public void testCommentary3(){
         CommentaryDao cDao = Persistence.getCommentaryDao();
         List<Commentary> c = cDao.getCommentariesFromProposalId(1);
-        assertTrue(!c.isEmpty());
+        assertFalse(c.isEmpty());
     }
 
     @Test
