@@ -1,6 +1,8 @@
 package dashboard;
 
 
+import dashboard.dto.Proposal;
+import dashboard.persistence.Persistence;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +20,9 @@ public class MainController {
     private List<SseEmitter> sseEmitters = Collections.synchronizedList(new ArrayList<>());
 
     @RequestMapping("/")
-    public String landing(Model model) {
+    public String landing(ArrayList<Proposal> proposals, Model model) {
+        proposals = (ArrayList<Proposal>) Persistence.getProposalDao().getProposals();
+        model.addAttribute("proposals",proposals);
         return "index";
     }
 

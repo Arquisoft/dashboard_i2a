@@ -1,8 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Dashboard</title>
-    <meta charset="UTF8"></meta>
+    <meta charset="UTF-8" ></meta>
     <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -17,6 +16,15 @@
     <h1>Council Dashboard</h1>
 </div>
 <div class="container-fluid">
+
+
+    <ul class="list-group" th:each="prop : ${proposals}">
+        <li class="list-group-item" th:text="${prop.content}" ></li>
+        <li class="list-group-item" th:text="${prop.votes}" ></li>
+        <li class="list-group-item" th:text="${prop.userid}" ></li>
+    </ul>
+
+
     <ul class="list-group">
         <h4 class="list-group-item-heading">Seguridad ciudadana</h4>
         <li class="list-group-item">Propuesta 1<span class="badge">5</span> </li>
