@@ -1,33 +1,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Dashboard</title>
-    <meta charset="UTF-8" ></meta>
-    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    </link>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script> var connect = function () {
-        var source = new EventSource('/register');
-        // Reconnect if the connection fails
-        source.addEventListener('error', function (e) {
-            console.log('Disconnected.');
-            if (e.readyState == EventSource.CLOSED) {
-                connected = false;
-                connect();
-            }
-        }, false);
-        source.addEventListener('message', function (e) {
-            var state = JSON.parse(e.data);
-            console.log("New state: " + state.text);
-            var element = document.getElementById("state");
-            element.innerHTML = state.text;
-        }, false);
-    };
-    </script>
 </head>
 <body>
 <div class="page-header">
@@ -36,7 +17,7 @@
 <div class="container-fluid">
 
     <h1>Categories: </h1>
-    <ul class="list-group" th:each="category : ${@repository.getCategories()}">
+    <ul class="list-group" th:each="category : ${@categoryRepository.findAll()}">
         <h2 class="list-group-item-heading" th:text="${category.name}"></h2>
 
         <ul class="list-group-item" th:each="prop : ${category.getProposals()}">
@@ -48,7 +29,7 @@
             <ul class="list-group-item" th:each="comment : ${prop.getCommentaries()}">
                 <h5 class="list-group-item-heading" th:text="${
                  comment.getUser().getFirstName() + ' ' + comment.getUser().getLastName()
-                + ' @' + comment.getFecha()}">
+                + ' @' + comment.getDate()}">
                     <span class="badge" th:text="${comment.getVotes()}"></span>
                 </h5>
 

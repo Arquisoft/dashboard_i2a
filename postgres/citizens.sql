@@ -141,7 +141,7 @@ CREATE TABLE public.commentary
   id integer NOT NULL DEFAULT nextval('commentary_id_seq'::regclass),
   content text,
   votes integer,
-  fecha date,
+  date date,
   user_id integer,
   proposal_id integer,
   CONSTRAINT commentary_pkey PRIMARY KEY (id),
@@ -190,7 +190,7 @@ VALUES (2, 'Hacer un monumento', 0, 1, 1);
 ALTER SEQUENCE public.proposal_id_seq RESTART WITH 3;
 
 INSERT INTO public.commentary(
-  id, content, votes, fecha, user_id, proposal_id)
+  id, content, votes, date, user_id, proposal_id)
 VALUES (1, 'Buena idea el parque', 0, '2017-04-02', 1, 1);
 
 ALTER SEQUENCE public.commentary_id_seq RESTART WITH 2;
